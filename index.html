@@ -1,0 +1,528 @@
+<!doctype html>
+
+<html id="docElement" style="min-height: 1080px;" >
+
+<head>
+    <title>NekromantiK</title>
+    <script type="text/javascript" src="js/tools/break_infinity.js"></script>
+    <script type="text/javascript" src="game.js"></script>
+    <script type="text/javascript" src="js/units.js"></script>
+    <script type="text/javascript" src="js/buildings.js"></script>
+    <script type="text/javascript" src="js/time.js"></script>
+    <script type="text/javascript" src="js/galaxies.js"></script>
+    <script type="text/javascript" src="js/tools/data_objects.js"></script>
+    <script type="text/javascript" src="js/tools/display_updates.js"></script>
+    <script type="text/javascript" src="js/tools/helptexts.js"></script>
+    <script type="text/javascript" src="js/tools/utils.js"></script>
+    <script type="text/javascript" src="js/tools/components.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+</head>
+
+<body id="htmlBody" class="scrollbar" onload="init()">
+    <div id="app">
+        <div id="shadowDiv" v-bind:style="{ 'box-shadow': shadowStyle }">
+            <div id="winScreen">
+                <div id="winMessage">
+                    congratulations. you have gone beyond.<br>
+                    continue your domination?<br>
+                    <button id="continueButton" class="endBut" style="font-weight: 900;" onclick="continueGame()">MORE...CORPSES...</button>
+                </div>
+            </div>
+            <div class="bpopup" id="offlineCalcPopup">
+                <div>
+                    <h2>Calculating offline production...</h2>
+                    <hr>
+                    if you see this for more than a few seconds, something's wrong. please contact the dev on <a href="https://discord.gg/H2V7FfT4Rt" target="_blank">discord</a>.
+                </div>
+            </div>
+            <div class="popup" id="offlineGainPopup">
+                <div>
+                    <h2>Offline Production</h2>
+                    You gained:<br>
+                    <span id="offlineZero" style="display: none;">Nothing.<br></span>
+                    <span id="offlineCorpse" style="display: none;"><span id="offlineCorpseGain" style="font-size: 15pt; font-weight: bold; color: #6c00b4;"> 0 </span> corpses.<br></span>
+                    <span id="offlineBrick" style="display: none;"><span id="offlineBrickGain" style="font-size: 15pt; font-weight: bold; color: #1c8a2e;"> 0 </span> astral bricks.<br></span>
+                    <span id="offlineArmament" style="display: none;"><span id="offlineArmamentGain" style="font-size: 15pt; font-weight: bold;"> 0 </span> armaments.<br></span>
+                    <span id="offlineAcolyte" style="display: none;"><span id="offlineAcolyteGain" style="font-size: 15pt; font-weight: bold;"> 0 </span> acolytes.<br></span>
+                    <span id="offlinePhoton" style="display: none;"><span id="offlinePhotonGain" style="font-size: 15pt; font-weight: bold;"> 0 </span> nekro-photons. <br></span>
+                    <span id="offlineEssence" style="display: none;"><span id="offlineTrueGain" style="font-size: 15pt; font-weight: bold; color: #006ba0;"> 0 </span> true time essence and<br><span id="offlineAntiGain" style="font-size: 15pt; font-weight: bold; color: #006ba0;"> 0 </span> anti time essence.<br></span>
+                    <span id="offlineGalaxy" style="display: none;"><span id="offlineGalaxyGain" style="font-size: 15pt; font-weight: bold; color: #e32d05;"> 0 </span> depleted galaxies. <br></span>
+                    <span id="offlineResearch" style="display: none;"><span id="offlineResearchGain" style="font-size: 15pt; font-weight: bold; color: #661503; -webkit-text-stroke-width: .5px; -webkit-text-stroke-color: white;"> 0 </span> void research. <br></span>
+                </div>
+                <button class="optBut" id="closeOfflinePopup" style="margin: 10px;" onclick="closeOfflinePopup()">CLOSE</button>
+            </div>
+            <div id="header" style="width: 1280px; text-align: center; height: 100%; margin: auto;">
+                <div v-if="player.help" id="helpDiv" class="scrollbar" v-html="(HELP_TEXTS[player.tab]===undefined) ? '' : generateHelpText(player.tab)">
+                    <div id="helpText">
+                    </div>
+                    <br>
+                </div>
+                <div id="versionNumber" style="float: right; margin-left: -75px;" v-html="GAME_DATA.version"></div>
+                <div id="resourceDisplay" style="width: 100%; margin: auto; text-align: center; height: 100%; min-height: 66px;">
+                    <table id="headerDisplayTable" cellpadding="0px" cellspacing="0px">
+                        <tr>
+                            <td colspan="3">
+                                <div style="font-size: 16pt; font-weight: bold;">You have <num-text data="u" :val="formatDefault(player.corpses)" label="corpses"></num-text>.</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div>You are harvesting <num-text data="u" :val="player.astralFlag ? '0' : formatDefault(getCorpsesPerSecond(true))" label="corpses"></num-text>/<span v-html="player.displayRealTime ? 'real sec' : 'sec'"></span>.<span v-if="devSpeed!=1" v-html="'<br>(@ '+devSpeed.toString()+'x time speed)'"></span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div v-if="player.astralFlag&&player.headerDisplay['astralNoticeDisplay']" style="color: #1c8a2e;"><h2>Corpse production disabled due to Astral Enslavement.</h2></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div v-if="player.headerDisplay['galaxiesBonusDisplay']&&player.headerDisplayUnlocked['galaxiesBonusDisplay']" style="font-size: 10pt;">You have formed <num-text data="sp" :val="formatWhole(player.stats.allTimeStats.totalGalaxies)" label="depleted galaxies"></num-text>, giving a <span style="font-size: 125%; font-variant-numeric: tabular-nums;">{{ formatUnitRow2(getGalaxiesBonus()) }}</span>x bonus to corpse gain.<span v-if="!hasAchievement(64)"> (softcapped at <num-text data="sp" :val="formatWhole(1000*(2**getNumCompletedProj()))" label="galaxies"></num-text>)</span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div v-if="player.headerDisplay['worldsBonusDisplay']&&player.headerDisplayUnlocked['worldsBonusDisplay']" style="font-size: 10pt;">You have exterminated <num-text data="sp" :val="formatWhole(player.worlds)" label="worlds"></num-text>, giving a <span style="font-size: 125%; font-variant-numeric: tabular-nums;">{{ formatUnitRow2(getWorldsBonus()) }}</span>x bonus to corpse gain.</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="25%" style="padding-bottom: 0px !important;">
+                                <table cellpadding="0px" cellspacing="0px" style="width: 100%; text-align: center; border-collapse: collapse;">
+                                    <tr>
+                                        <td>
+                                            <div v-if="player.headerDisplay['crystalsDisplayHeader']&&player.headerDisplayUnlocked['crystalsDisplayHeader']" style="font-size: 10pt;">You have <num-text data="t" :val="formatWhole(player.crystals)" label="time crystals"></num-text>.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div v-if="player.headerDisplay['bricksDisplayHeader']&&player.headerDisplayUnlocked['bricksDisplayHeader']" style="font-size: 10pt;">You have <num-text data="b" :val="formatWhole(player.bricks)" label="astral bricks"></num-text>.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div v-if="player.headerDisplay['bricksGainDisplayHeader']&&player.headerDisplayUnlocked['bricksGainDisplayHeader']" style="font-size: 10pt;">You are gaining <num-text data="b" :val="player.astralFlag ? formatDefault(getBricksPerSecond(true)) : '0'" label="astral bricks"></num-text>/<span v-html="player.displayRealTime ? 'real sec' : 'sec'"></span>.</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td width="50%">
+                                <table cellpadding="0px" cellspacing="0px" style="width: 100%; text-align: center; border-collapse: collapse;">
+                                    <tr>
+                                        <td>
+                                            <div v-if="player.headerDisplay['unitsBoostDisplay']&&player.headerDisplayUnlocked['unitsBoostDisplay']" style="font-size: 10pt;">Total corpse gain multiplier from units: <span style="font-size: 125%; font-variant-numeric: tabular-nums;">{{ formatUnitRow2(getCorpseMultFromUnits()) }}</span></div>
+                                        </td>
+                                    </tr><tr>
+                                        <td>
+                                            <div v-if="player.headerDisplay['totalBonusDisplay']&&player.headerDisplayUnlocked['totalBonusDisplay']" style="font-size: 10pt;">Total corpse gain multiplier from all sources: <span style="font-size: 125%; font-variant-numeric: tabular-nums;">{{ formatUnitRow2(getTotalCorpseMult()) }}</span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div v-if="player.headerDisplay['timeBoostDisplay']&&player.headerDisplayUnlocked['timeBoostDisplay']" style="font-size: 10pt;">Your <span v-if="!player.astralFlag" class="normalColors">NORMAL</span><span v-else class="astralColors">ASTRAL</span> time is going <span id="timeMult" v-bind:class="{'normalColors': !player.astralFlag, 'astralColors': player.astralFlag}" v-html="player.astralFlag ? formatUnitRow2(getAntiTimeBuff()) : formatUnitRow2(getTrueTimeBuff())"></span>x as fast.</div></td>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td width="25%">
+                                <table cellpadding="0px" cellspacing="0px" style="width: 100%; text-align: center; border-collapse: collapse;">
+                                    <tr>
+                                        <td>
+                                            <div v-if="player.headerDisplay['unspentGalaxiesHeaderDisplay']&&player.headerDisplayUnlocked['unspentGalaxiesHeaderDisplay']" style="font-size: 10pt;">You have <num-text data="g" :val="formatWhole(player.galaxies)" label="unspent galaxies"></num-text>.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div v-if="player.headerDisplay['researchDisplayHeader']&&player.headerDisplayUnlocked['researchDisplayHeader']" style="font-size: 10pt;">You have <num-text data="e" :val="formatDefault(player.research)" label="void research"></num-text>.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div v-if="player.headerDisplay['researchGainDisplayHeader']&&player.headerDisplayUnlocked['researchGainDisplayHeader']" style="font-size: 10pt;">You are gaining <num-text data="e" :val="formatDefault(getResearchPerSecond(true))" label="void research"></num-text>/<span v-html="player.displayRealTime ? 'real sec' : 'sec'"></span>.</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div v-if="player.headerDisplay['achBoostDisplay']&&player.headerDisplayUnlocked['achBoostDisplay']" style="font-size: 10pt;">You have <span style="font-size: 125%;">{{ formatWhole(getNumAchievements()) }}</span> achievements and <span style="font-size: 125%;">{{ formatWhole(getNumAchRows()) }}</span> completed achievement rows, giving a <span style="font-size: 125%">{{ formatUnitRow2(getAchievementBoost()) }}</span>x bonus to corpse gain.</div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <popups ref="popupscontainer"></popups>
+            </div>
+            <main-nav :data="['u', 'b', 't', 'g', 's', 'o', 'h']" :active="player.tab"></main-nav>
+            <div id="game">
+                <div id="unitsTab" class="pageTab" v-bind:style="[(player.tab=='unitsTab') ? { display: 'block' } : { display: 'none' }]">
+                    <sub-nav data="u" :ids="['units', 'autobuyers']" :active="player.subTabs['u']"></sub-nav>
+                    <div id="unitsSubTab" class="unitSubTab" v-bind:style="[(player.subTabs['u']=='unitsSubTab' && player.tab=='unitsTab') ? { display: 'block' } : { display: 'none' }]">
+                        <div style="width: 350px; margin: 10px auto;">
+                            <button v-bind:class="{ zapBut: true, can: true, }" onClick="zap()">UNLEASH DEATH<br><span style="font-size: 14pt;">gain <num-text data="sp" :val="formatWhole(getZapGain())" label="corpses"></num-text></span><br><span style="font-size: 10pt; font-weight: 400;">(square root of your zombies, rounded down)</span></button>
+                        </div>
+                        <dimension-table data="u"></dimension-table>
+                        <div v-if="player.units[4].bought.gte(1) || player.ascensions.gt(0)" id="spacePresContainer" style="text-align: center; margin-top: 25px;">
+                            <prestige-button data="u"></prestige-button><br>
+                        </div>
+                    </div>
+                    <div id="autobuyersSubTab" class="unitSubTab" v-bind:style="[(player.subTabs['u']=='autobuyersSubTab') ? { display: 'block' } : { display: 'none' }]">
+                        <div id="autobuyerInfo" style="text-align: center; margin-top: 20px;">
+                            Unit autobuyers attempt to buy in order from priority 1 to priority 8.<br>
+                            Slow autobuyers trigger every 15 <span style="font-weight: bold;">real-world</span> seconds, unaffected by astral enslavement or time essence.<br>
+                            Once unlocked, the prestige buyer and the fast, bulk, and advanced upgrades are permanently available whenever autobuyers are.<br>
+                            Set the world prestige max to 0 for no limit.
+                        </div>
+                        <div style="text-align: center; margin: 25px auto 5px;">
+                            <input type="radio" id="allBuyers" name="allBuyersCheck" class="buyerRadio" value="all" v-model="allBuyersRadio"><label for="allBuyers">toggle all autobuyers</label>
+                            <input type="radio" id="unitsOnly" name="allBuyersCheck" class="buyerRadio" value="units" v-model="allBuyersRadio"><label for="unitsOnly">toggle unit autobuyers</label>
+                        </div>
+                        <div style="text-align: center; margin: 5px auto;">
+                            <layer-button data="u" :width="180" text="Toggle All On/Off" fname="allAuto" :args="0" addlclass="buyerTog" :cancl="true"></layer-button>
+                            <layer-button data="u" :width="180" text="Turn All On" fname="allAuto" :args="1" addlclass="buyerTog" :cancl="true"></layer-button>
+                            <layer-button data="u" :width="180" text="Turn All Off" fname="allAuto" :args="-1" addlclass="buyerTog" :cancl="true"></layer-button>
+                        </div>
+                        <div style="text-align: center; margin: auto;">
+                            <layer-button data="u" :width="180" text="Toggle All Speed" fname="allSpeed" addlclass="buyerTog" :cancl="player.unlocks['fastBuyers']"></layer-button>
+                            <layer-button data="u" :width="180" text="Toggle All Amount" fname="allAmount" addlclass="buyerTog" :cancl="player.unlocks['bulkBuyers']"></layer-button>
+                        </div>
+                        <multi-boxes data="ab"></multi-boxes>
+                    </div>
+                </div>
+                <div id="buildingsTab" class="pageTab" v-bind:style="[(player.tab=='buildingsTab') ? { display: 'block' } : { display: 'none' }]">
+                    <sub-nav data="b" :ids="['buildings', 'construction']" :active="player.subTabs['b']"></sub-nav>
+                    <table style="width: 75%; margin: auto; text-align: center;">
+                        <tr rowspan="3">
+                            <td colspan="3">
+                                <button id="astralToggle" v-bind:class="{ astralOn: player.astralFlag, astralBut: !player.astralFlag }" style="margin: 15px;" onclick="toggleAstral()"><span id="astralText">{{ player.astralFlag ? 'disable' : 'enable' }}</span><h2>ASTRAL ENSLAVEMENT</h2></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" id="brickTooltip" v-bind:class="{ tooltip: player.tooltipsEnabled }" data-title="corpse production rate ^0.2">
+                                <div style="font-size: 18pt;">Your unholy hordes have forged <num-text data="b" :val="formatDefault(player.bricks)" label="astral bricks"></num-text>.</div>
+                                <div v-if="player.astralFlag" id="brickGainDiv" style="font-size: 15pt;">You are gaining <num-text data="b" :val="formatDefault(getBricksPerSecond(true))" label="bricks"></num-text>/<span v-html="player.displayRealTime ? 'real sec' : 'sec'"></span>. (@ {{ getAstralNerf() }}x slower time speed)</div>
+                                <div v-if="hasAchievement(15)" id="keptBricks" style="font-size: 15pt;">You will keep <num-text data="b" :val="formatDefault(getAchievementEffect(15))" label="bricks"></num-text> on sacrifice.</div>
+                                <span style="font-size: 11pt">You can now force the dead you harvest to work for your rapidly growing empire. While Astral Enslavement is active, time goes 10x slower,
+                                and you won't gain any corpses; instead, those tortured, miasmic souls will suffer tirelessly making bricks for your most unholy of foundations.<br></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="noticeText">World Prestige resets your <span v-if="!hasAchievement(15)">Astral Bricks and </span>building resources,<br>but not built buildings or purchased upgrades.</div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="buildingsSubTab" class="buildingSubTab" v-bind:style="[(player.subTabs['b']=='buildingsSubTab' && player.tab=='buildingsTab') ? { display: 'block' } : { display: 'none' }]">
+                        <building data="b1"></building><br>
+                        <building data="b2"></building><br>
+                        <building data="b3"></building><br>
+                        <building data="b4"></building><br>
+                        <div style="min-height: 25px;"></div>
+                    </div>
+                    <div id="constructionSubTab" class="buildingSubTab" v-bind:style="[(player.subTabs['b']=='constructionSubTab' && player.tab=='buildingsTab') ? { display: 'block' } : { display: 'none' }]">
+                        <construction data="c"></construction>
+                    </div>
+                </div>
+                <div id="timeTab" class="pageTab" v-bind:style="[(player.tab=='timeTab') ? { display: 'block' } : { display: 'none' }]">
+                    <sub-nav data="t" :ids="['refinery', 'upgs']" :active="player.subTabs['t']"></sub-nav>
+                    <table style="width: 75%; margin: auto; text-align: center;">
+                        <tr>
+                            <div id="timePresContainer" style="text-align: center; margin-top: 25px;">
+                                <prestige-button data="t"></prestige-button><br>
+                                <input type="checkbox" id="respecOnSac" class="timeCheckbox" v-model="respecNextSac"> Respec emitters on next sacrifice
+                            </div>
+                        </tr>
+                        <tr style="height: 15px;">
+                            <div style="height: 100%;"></div>
+                        </tr>
+                        <tr>
+                            <td >
+                                <div style="width: 100%; font-size: 18pt;">You have <num-text data="t" :val="formatWhole(player.crystals)" label="time crystals"></num-text>.</div>
+                                <div style="width: 100%; font-size: 18pt;">Your Refinery is level <num-text data="t" :val="formatWhole(player.refLevel)" label=""></num-text> and contains <num-text data="t" :val="formatWhole(player.totalEmitters)" label="Time Emitters"></num-text>.</div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="refinerySubTab" class="timeSubTab" v-bind:style="[(player.subTabs['t']=='refinerySubTab' && player.tab=='timeTab') ? { display: 'block' } : { display: 'none' }]">
+                        <table style="width: 75%; margin: auto; margin-top: 20px; text-align: center;" cellpadding="0">
+                            <tr>
+                                <td>
+                                    <div style="min-height: 5px;"></div>
+                                    
+                                </td>
+                                <td>
+                                    <button v-bind:class="{ refineryBut: true, can: canAffordRefinery(), cant: !canAffordRefinery() }" v-on:click="upgradeRefinery()" style="margin: 10px;"><span style="font-size: 16pt;">Increase refinery level</span><br><span style="font-size: 10pt;">You will gain {{ formatWhole(getEmittersPerLevel()) }} additional emitters.</span><br>Cost: {{ formatUR(getRefineryCost(), 0) }} time crystals</button>
+                                    <layer-button v-bind:class="{ timeUnlockedButtonNotify: !player.timeLocked }" data="t" :width="300" :text="(player.timeLocked ? 'Respec emitters - forces sacrifice' : 'Lock in and begin time production')" :cancl="true" fname="timeLockRespec"></layer-button>
+                                </td>
+                                <td>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div v-bind:class="{ timeUnlockedButtonNotify: ((player.totalEmitters-player.antiEmitters-player.trueEmitters)>0) }" style="display: inline-block; margin: 20px; padding: 0px 5px;"><h3 style="margin: 0px;">You have <num-text data="t" :val="formatWhole(player.totalEmitters-player.trueEmitters-player.antiEmitters)" label=""></num-text> unassigned emitters.</h3></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table style="width: 320px; float: left; text-align: center;">
+                                        <tr>
+                                            <td>
+                                                <div style="min-width: 320px;">
+                                                    <div class="timeLabelLeft">TRUE<br>TIME</div><br>
+                                                </div>
+                                                <div id="trueTooltip" v-bind:class="{ tooltip: player.tooltipsEnabled }" style="width: 80%; margin: auto;" data-title="boost: 1 + log(x)/nerf&#xA;nerf: log(x)^0.2">Your True Time Emitters speed up normal time by<br><span id="trueTimeBuff" style="font-size: 16pt; font-variant-numeric: tabular-nums;" v-html="formatDefault2(getTrueTimeBuff())"></span>x<br> <span v-if="hasGUpgrade(4, 41) && hasUpgrade(4, 22)" id="antiNerfTimesText">and they multiply</span><span v-else id="antiNerfDivText">but they divide</span> the Anti Time effect by<br><span id="trueTimeNerf" style="font-size: 16pt; font-variant-numeric: tabular-nums;" v-html="formatDefault2(getTrueTimeNerf())"></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="margin: auto;">You have <num-text data="t" :val="formatWhole(player.trueEmitters)" label="True Time Emitters"></num-text>.</div>
+                                            </td>
+                                        </tr>
+                                        <!--<tr>
+                                            <td>
+                                                <div class="slidecontainer" style="text-align: center;">
+                                                    <input type="range" min="0" :max="player.totalEmitters" v-model="trueSliderVal" v-on:change="updateOnTrueChange()" :class="player.timeLocked ? 'sliderLocked' : 'slider'" id="trueSlider" :disabled="player.timeLocked">
+                                                </div>
+                                            </td>
+                                        </tr>-->
+                                    </table>
+                                </td>
+                                <td>
+                                    <h2>Assign Emitters:</h2>
+                                    <div><a class="emitterArrows" href="javascript:assignTrue(1)">&lArr;</a><div class="emitterRowDiv">single</div><a class="emitterArrows" href="javascript:assignAnti(1)">&rArr;</a></div>
+                                    <hr class="emittersHR">
+                                    <div><a class="emitterArrows" href="javascript:assignTrue(10)">&lArr;</a><div class="emitterRowDiv">10%</div><a class="emitterArrows" href="javascript:assignAnti(10)">&rArr;</a></div>
+                                    <hr class="emittersHR">
+                                    <div><a class="emitterArrows" href="javascript:assignTrue(25)">&lArr;</a><div class="emitterRowDiv">25%</div><a class="emitterArrows" href="javascript:assignAnti(25)">&rArr;</a></div>
+                                    <hr class="emittersHR">
+                                    <div><a class="emitterArrows" href="javascript:assignTrue(50)">&lArr;</a><div class="emitterRowDiv">50%</div><a class="emitterArrows" href="javascript:assignAnti(50)">&rArr;</a></div>
+                                    <hr class="emittersHR">
+                                    <div><a class="emitterArrows" href="javascript:assignTrue(100)">&lArr;</a><div class="emitterRowDiv">100%</div><a class="emitterArrows" href="javascript:assignAnti(100)">&rArr;</a></div>
+                                    <hr class="emittersHR">
+                                    <!--<div style="font-size: 12pt;">this many:</div>-->
+                                    <div><a class="emitterArrows" href="javascript:assignTrue(0)">&lArr;</a><div class="emitterRowText">this many:<br><input v-model="emitterAmount" v-on:change="updateEmitterAmount()" type="text" id="emittersTextbox" name="emittersTextbox" class="buyerTextT"></div><a class="emitterArrows" href="javascript:assignAnti(0)">&rArr;</a></div>
+                                    <div style="min-height: 32px;"><div style="font-size: 10pt;" v-if="emittersError">invalid entry. amount set to last good value: {{ player.emittersAmount }}</div></div>
+                                    <!--<div>auto-assign to:</div>
+                                    <div><input type="radio" id="trueRadio" name="autoEmittersRadio" class="timeCheckbox" value="true" v-model="autoEmitters"><label for="trueRadio">true</label>
+                                    <input type="radio" id="antiRadio" name="autoEmittersRadio" class="timeCheckbox" value="anti" v-model="autoEmitters"><label for="antiRadio">anti</label><br>
+                                    <input type="radio" id="noneRadio" name="autoEmittersRadio" class="timeCheckbox" value="none" v-model="autoEmitters"><label for="noneRadio">none</label></div>-->
+                                </td>
+                                <td>
+                                    <table style="width: 320px; float: right; text-align: center;">
+                                        <tr>
+                                            <td>
+                                                <div style="min-width: 320px;">
+                                                    <div class="timeLabelRight">ANTI<br>TIME</div><br>
+                                                </div>
+                                                <div id="antiTooltip" v-bind:class="{ tooltip: player.tooltipsEnabled }" style="width: 80%; margin: auto;" data-title="boost: 1 + 2*log(x)/nerf&#xA;nerf: log(x)^0.2">Your Anti Time Emitters speed up astral time by<br><span id="antiTimeBuff" style="font-size: 16pt; font-variant-numeric: tabular-nums;" v-html="formatDefault2(getAntiTimeBuff())"></span>x<br> <span v-if="hasGUpgrade(4, 41) && hasUpgrade(4, 22)" id="trueNerfTimesText">and they multiply</span><span v-else id="trueNerfDivText">but they divide</span> the True Time effect by<br><span id="antiTimeNerf" style="font-size: 16pt; font-variant-numeric: tabular-nums;" v-html="formatDefault2(getAntiTimeNerf())"></span></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div style="margin: auto;">You have <num-text data="t" :val="formatWhole(player.antiEmitters)" label="Anti Time Emitters"></num-text>.</div>
+                                            </td>
+                                        </tr>
+                                        <!--<tr>
+                                            <td colspan="2">
+                                                <div class="slidecontainer" style="text-align: center;">
+                                                    <input type="range" min="0" :max="player.totalEmitters" v-model="antiSliderVal" v-on:change="updateOnAntiChange()" :class="player.timeLocked ? 'sliderLocked' : 'slider'" id="antiSlider" :disabled="player.timeLocked">
+                                                </div>
+                                            </td>
+                                        </tr>-->
+                                    </table>
+                                </td>
+                            </tr>
+                            <!--<tr>
+                                <td colspan="3">
+                                    <div style="font-size: 10pt;">(auto-assign only works when a percentage is checked)</div>
+                                </td>
+                            </tr>-->
+                        </table>
+                        <!--<table style="width: 75%; margin: auto; margin-top: 20px; text-align: center;">
+                            <tr>
+                                <td width="10%">
+                                    <div style="float: left;"><span id="sliderValueLeft" style="font-size: 16pt;" v-html="formatWhole(100-sliderVal)"></span>%</div>
+                                </td>
+                                <td width="80%">
+                                    <div><layer-button data="t" :width="300" :text="(player.timeLocked ? 'Respec slider - forces sacrifice' : 'Lock in and begin time production')" fname="timeLockRespec"></layer-button></div>
+                                </td>
+                                <td width="10%">
+                                    <div style="float: right;"><span id="sliderValueRight" style="font-size: 16pt;" v-html="formatWhole(sliderVal)"></span>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="slidecontainer" style="text-align: center;">
+                                        <input type="range" min="0" max="100" value="50" v-model="sliderVal" :class="player.timeLocked ? 'sliderLocked' : 'slider'" id="timeSlider" :disabled="player.timeLocked">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="height: 25px;">
+                                <div style="height: 100%;"></div>
+                            </tr>
+                        </table>
+                        <dimension-table data="t"></dimension-table>-->
+                    </div>
+                    <div id="timeUpgSubTab" class="timeSubTab" v-bind:style="[(player.subTabs['t']=='timeUpgSubTab' && player.tab=='timeTab') ? { display: 'block' } : { display: 'none' }]">
+                        <div v-if="hasMilestone(6)" id="extraColsNotice" style="text-align: center; margin: 10px auto;">The two additional columns of upgrades from milestone 6 are never reset.</div>
+                        <div v-if="hasMilestone(6)" id="timeUpgBuyerDiv" style="text-align: center; margin: auto;"><layer-button data="t" :width="300" :text="'Time Upgrade Cols 1-3 Autobuyer: ' + (player.autobuyers['time']['on'] ? 'ON' : 'OFF')" :cancl="true" fname="toggleTimeUpgBuyer"></layer-button></div>
+                        <time-upg-table data="t"></time-upg-table>
+                    </div>
+                </div>
+                <div id="galaxyTab" class="pageTab" v-bind:style="[(player.tab=='galaxyTab') ? { display: 'block' } : { display: 'none' }]">
+                    <sub-nav data="g" :ids="['galaxies', 'research', 'infResearch', 'ark']" :active="player.subTabs['g']"></sub-nav>
+                    <table style="width: 75%; margin: auto auto; text-align: center;">
+                        <tr>
+                            <div id="galaxyPresContainer" style="text-align: center; margin-top: 25px;">
+                                <prestige-button data="g"></prestige-button><br>
+                                <input type="checkbox" id="respecOnAsc" class="galaxyCheckbox" v-model="respecNextGal"> Respec galaxies on next ascension<br>
+                                <input v-model="dontRespec" type="checkbox" id="dontResetSliderBox" class="galaxyCheckbox" style="margin-top: 10px;"> Don't unlock time on ascension
+                            </div>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="galaxyAmountDisplay" style="font-size: 18pt;">You have <num-text data="g" :val="formatWhole(player.galaxies)" label="depleted galaxies"></num-text> out of <span id="totalGalaxyAmount" class="galNum" v-html="formatWhole(player.stats.allTimeStats.totalGalaxies)"></span> total formed.</div>
+                                <div id="ascensionAmountDisplay" style="font-size: 18pt;">You have achieved <num-text data="g" :val="formatWhole(player.stats['allTimeStats'].totalAscensions)" label="ascensions"></num-text>.</div>
+                                <div v-if="!hasAchievement(64)" id="softcapMainDisplay" style="font-size: 16pt;" v-bind:class="{ tooltip: player.tooltipsEnabled }" data-title="cube root exponent: effect = x*(10^cbrt(log(y))) where x=effect at limit, y=(effect before softcap)/x">All effects based on total galaxies are softcapped at <num-text data="g" :val="formatWhole(1000*(2**getNumCompletedProj()))" label="galaxies"></num-text>.</div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="galaxiesSubTab" class="galaxySubTab" v-bind:style="[(player.subTabs['g']=='galaxiesSubTab' && player.tab=='galaxyTab') ? { display: 'block' } : { display: 'none' }]">
+                        <div style="text-align: center; width: 100%; margin: auto;">
+                            <span style="font-size: 17pt; font-weight: bold; color: #e32d05;">There must be loss in exchange for true power.</span><br>
+                            All galaxy upgrades have a base cost of <span style="font-size: 17pt;"> 1 </span> depleted galaxy, but when you buy one, all others on rows below it increase in cost by 1.<br>
+                            You can't take both branches in the same tree; buying an upgrade in the 2nd row will lock out the two in the other branch.<br>
+                            Buying a 4th row upgrade will increase the cost of the 1st row upgrades by 1.<br>
+                            A galaxy respec resets all costs to 1, and unlocks all locked upgrades.<br><br>
+                        </div>
+                        <div id="galSelect" style="text-align: center; width: 100%; margin: auto;">Display  <select v-model="galSelected" id="galDisplaySelect" name="galDisplaySelect" class="galDropdown" v-on:change="changeGalaxiesDisplayed()"><option id="1gal" class="galOptions" value="1">1</option><option id="2gal" class="galOptions" value="2">2</option><option id="4gal" class="galOptions" value="4">4</option></select>  at a time</div>
+                        <div id="galButs2" v-bind:style="[(player.activeGalaxies[0]=='2') ? {display: 'block'} : {display: 'none'}]"><layer-button data="g" :width="270" text="Andromeda/Circinus" fname="showGalaxies" :args="['1', '2']"></layer-button><layer-button data="g" :width="270" text="Sculptor Dwarf/Triangulum" fname="showGalaxies" :args="['3', '4']"></layer-button></div>
+                        <div id="galButs4" v-bind:style="[(player.activeGalaxies[0]=='1') ? {display: 'block'} : {display: 'none'}]"><layer-button data="g" :width="130" text="Andromeda" fname="showGalaxy" args="1"></layer-button><layer-button data="g" :width="130" text="Circinus" fname="showGalaxy" args="2"></layer-button><layer-button data="g" :width="130" text="Sculptor Dwarf" fname="showGalaxy" args="3"></layer-button><layer-button data="g" :width="130" text="Triangulum" fname="showGalaxy" args="4"></layer-button></div>
+                        <div style="text-align: center; width: 100%; margin: auto;"><layer-button data="g" :width="270" text="Respec galaxies - forces ascension" fname="respecGalaxiesClick"></layer-button><layer-button data="g" :width="270" text="Galaxy Milestones" fname="showMilestones" :addlclass="(player.tabNotify.milestones ? 'milestonesNotify' : '')"></layer-button></div>
+                        <div id="galaxyImpExp" style="text-align: center; width: 100%; margin: auto;"><layer-button data="g" :width="130" text="Import Galaxies" fname="showImportGalaxies"></layer-button><layer-button  data="g" :width="130" text="Export Galaxies" fname="exportGalaxies"></layer-button><layer-button data="g" :width="270" text="Load/Save Favorites" fname="showNormalPopup" args="fpop"></layer-button></div>
+                        
+                        <galaxies-table ref="gtable" data="g"></galaxies-table>
+                    </div>
+                    <div id="researchSubTab" class="galaxySubTab" v-bind:style="[(player.subTabs['g']=='researchSubTab' && player.tab=='galaxyTab') ? { display: 'block' } : { display: 'none' }]">
+                        <div v-if="(player.isInResearch&&!isResearchActive(7))" id="researchDisplayDiv">
+                            You have <num-text data="e" :val="formatUnitRow(player.research)" label="void research"></num-text>.<br>
+                            You are producing <num-text data="e" :val="formatUnitRow(getResearchPerSecond(true))" label="void research"></num-text>/<span v-html="player.displayRealTime ? 'real sec' : 'sec'"></span>. <span v-if="player.astralFlag" id="infResearchAstralNotice">(@ <span id="astralNerfInfResearch" v-html="getAstralNerf()"></span>x slower time speed)</span><br>
+                            Goal: <num-text data="e" :val="formatUnitRow(getCurrentGoal())" label="void research"></num-text>.<br>
+                            <layer-button data="e" :width="250" :text="'Toggle Astral: ' + (player.astralFlag ? 'ON' : 'OFF')" fname="toggleAstral"></layer-button><br><!--<button id="astralButResearch" onclick="toggleAstralResearch()">Toggle Astral: OFF</button>-->
+                            <layer-button data="e" :width="250" :text="'Cancel Research Project<br>(forces an ascension reset)'" fname="respecGalaxiesClick"></layer-button>
+                        </div>
+                        <div id="researchDescription" style="text-align: center; width: 920px; margin: auto; font-size: 11pt;">
+                            <div style="margin: 5px;"><span style=" font-size: 16pt; font-weight: bold;">When you begin a research project, you do a galaxy respec and time respec,</span> without any exceptons from milestones, achievements past the first row, or project rewards: <span style="font-size: 12pt;">ALL</span> of your astral bricks, buildings, upgrades, and time crystals are reset, and you start with 10 corpses. All tabs stay unlocked.<br>(Galactic Vortex and the 4th/5th Time Upgrade columns don't reset, but they have no effect during research.)</div>
+                            <div style="margin: 5px;">During astral enslavement, your vassal souls tirelessly study the eldritch sciences of <span style="font-size: 14pt; color: #661503; font-weight: bold; -webkit-text-stroke-width: .3px; -webkit-text-stroke-color: white;">the beyond</span>. As a result, your base astral brick production is square rooted, but you produce Void Research at the same base rate.</div>
+                            <div style="margin: 5px;">Additionally, galaxy upgrade costs are tripled (after the cost increase from higher rows), and <span style="font-size: 12pt;">ALL</span> production other than astral bricks and void research is raised to ^0.9.</div>
+                            <div style="margin: 5px;">To complete a research project, you must reach the required amount of Void Research under these conditions in addition to the specific conditions below.</div>
+                            <div style="margin: 5px;"><span style="font-size: 14pt;">NOTE:</span> performing an ascension or galaxy respec will exit the current project and set your void research to 0.</div>
+                            <div style="margin: 5px;"><span style=" font-size: 16pt; font-weight: bold;">Completing a project respecs galaxies without an ascension reset.</div>
+                            <span style="font-size: 14pt; font-weight: bold; color: #e32d05;">Each project completed doubles the number of galaxies the galaxy softcaps start at.</span>
+                        </div>
+                        <multi-boxes data="r"></multi-boxes>
+                    </div>
+                    <div id="infResearchSubTab" class="galaxySubTab" v-bind:style="[(player.subTabs['g']=='infResearchSubTab' && player.tab=='galaxyTab') ? { display: 'block' } : { display: 'none' }]">
+                        <div v-if="isResearchActive(7)" id="infResearchDisplayDiv">
+                            You have <num-text data="e" :val="formatUnitRow(player.research)" label="void research"></num-text>.<br>
+                            You are producing <num-text data="e" :val="formatUnitRow(getResearchPerSecond(true))" label="void research"></num-text>/<span v-html="player.displayRealTime ? 'real sec' : 'sec'"></span>. <span v-if="player.astralFlag" id="infResearchAstralNotice">(@ <span id="astralNerfInfResearch" v-html="getAstralNerf()"></span>x slower time speed)</span><br>
+                            Goal: <num-text data="e" :val="formatUnitRow(getCurrentGoal())" label="void research"></num-text>.<br>
+                            <layer-button data="e" :width="225" :text="'Toggle Astral: ' + (player.astralFlag ? 'ON' : 'OFF')" fname="toggleAstral"></layer-button><br><!--<button id="astralButInfResearch" onclick="toggleAstralResearch()">Toggle Astral: OFF</button>-->
+                            <layer-button data="e" :width="250" :text="'Cancel Research Project<br>(forces an ascension reset)'" fname="respecGalaxiesClick"></layer-button>
+                        </div>
+                        <div id="infResearchDescription" style="text-align: center; width: 920px; margin: auto; font-size: 11pt;">
+                            <div style="margin: 5px;"><span style="font-size: 18pt; color: #661503; font-weight: bold; -webkit-text-stroke-width: .5px; -webkit-text-stroke-color: white;">The Beyond holds infinite, untold knowledge.</div>
+                            <div style="margin: 5px;">You have the knowledge needed to craft The Ark, but your thirst has not been quenched.</div>
+                            <div style="margin: 5px;">Infinite research is the same as research project 6, with corpse production raised ^0.9 a second time. Infinite research can be completed unlimited times: each completion raises time crystal gain to ^1.01, and multiplies the goal amount by 10.</div>
+                            <div style="margin: 5px;">Every completion rewards 1 Impossible Theorem. Each unspent theorem raises the exterminated worlds effect to ^1.2, and they are used to buy Ethereal Upgrades.</div>
+                        </div>
+                        <div id="infResearchDisplayDiv" style="margin: 10px auto; text-align: center;font-size: 15pt;">
+                            You have <num-text data="sp" :val="formatWhole(player.theorems)" label="impossible theorem"></num-text><span v-if="!player.theorems.eq(1)">s</span>, raising the exterminated worlds effect to ^<span id="theoremEffect" style=" font-size: 17pt; font-weight: bold;" v-html="formatDefault2(getTheoremBoostW())"></span><br>
+                            You have completed <num-text data="sp" :val="formatWhole(player.infCompletions)" label="infinite research projects"></num-text>, raising time crystal gain to ^<span id="theoremEffectC" style=" font-size: 17pt; font-weight: bold;" v-html="formatDefault2(getTheoremBoostC())"></span>.
+                        </div>
+                        <multi-box data="e" :id="11"></multi-box>
+                        <eth-upg-table data="e"></eth-upg-table>
+                    </div>
+                    <div id="arkSubTab" class="galaxySubTab" v-bind:style="[(player.subTabs['g']=='arkSubTab' && player.tab=='galaxyTab') ? { display: 'block' } : { display: 'none' }]">
+                        <div v-if="player.win" id="winDescription" style="text-align: center; width: 100%; font-size: 32pt; color: #661503; font-weight: bold; -webkit-text-stroke-width: 1px; -webkit-text-stroke-color: white;">YOU HAVE GONE BEYOND.</div>
+                        <div v-if="!player.win" id="arkDescription" style="text-align: center; width: 100%;">
+                            <span style="font-size: 17pt; font-weight: bold; color: #e32d05;">You receive a message from beyond.</span><br>
+                            <span style="font-size: 16pt; color: #661503; font-weight: bold; -webkit-text-stroke-width: .3px; -webkit-text-stroke-color: white;">"We have found you worthy of our ranks, small one."<br>
+                            "Make yourself an ark of astral matter; make rooms in the ark, and cover it inside and outside with time."</span><br>
+                            Even in your godlike state this is beyond you. This will require study.<br>
+                            Of course, you have undead souls to do your studying for you.<br>
+                        </div>
+                        <img v-if="player.ark['thrusters'].unlocked&&!player.ark['thrusters'].bought" id="thrusters" class="arkImg" style="display: block;" src="../images/thrusters.png">
+                        <img v-if="player.ark['engines'].unlocked&&!player.ark['engines'].bought" id="engines" class="arkImg" style="display: block;" src="../images/engines.png">
+                        <img v-if="player.ark['navigation'].unlocked&&!player.ark['navigation'].bought" id="navigation" class="arkImg" style="display: block;" src="../images/navigation.png">
+                        <img v-if="player.ark['torpedos'].unlocked&&!player.ark['torpedos'].bought" id="torpedos" class="arkImg" style="display: block;" src="../images/torpedos.png">
+                        <img v-if="player.ark['railguns'].unlocked&&!player.ark['railguns'].bought" id="railguns" class="arkImg" style="display: block;" src="../images/railguns.png">
+                        <img v-if="player.ark['support'].unlocked&&!player.ark['support'].bought" id="support" class="arkImg" style="display: block;" src="../images/support.png">
+                        <img v-if="player.ark['thrusters'].bought&&!player.win" id="thrustersBuilt" class="arkImgBuilt" style="display: block;" src="../images/thrusterscolor.png">
+                        <img v-if="player.ark['engines'].bought&&!player.win" id="enginesBuilt" class="arkImgBuilt" style="display: block;" src="../images/enginescolor.png">
+                        <img v-if="player.ark['navigation'].bought&&!player.win" id="navigationBuilt" class="arkImgBuilt" style="display: block;" src="../images/navigationcolor.png">
+                        <img v-if="player.ark['torpedos'].bought&&!player.win" id="torpedosBuilt" class="arkImgBuilt" style="display: block;" src="../images/torpedoscolor.png">
+                        <img v-if="player.ark['railguns'].bought&&!player.win" id="railgunsBuilt" class="arkImgBuilt" style="display: block;" src="../images/railgunscolor.png">
+                        <img v-if="player.ark['support'].bought&&!player.win" id="supportBuilt" class="arkImgBuilt" style="display: block;" src="../images/supportcolor.png">
+                        <img v-if="player.win&&!player.continue" id="fullyBuilt" class="arkImgBuilt" style="display: block;" src="../images/spaceshipcolor.png">
+                        <upgrade data="a" cssid="thrustersBut" :id="'thrusters'" extra="1"></upgrade>
+                        <upgrade data="a" cssid="enginesBut" :id="'engines'" extra="2"></upgrade>
+                        <upgrade data="a" cssid="navigationBut" :id="'navigation'" extra="3"></upgrade>
+                        <upgrade data="a" cssid="torpedosBut" :id="'torpedos'" extra="4"></upgrade>
+                        <upgrade data="a" cssid="railgunsBut" :id="'railguns'" extra="5"></upgrade>
+                        <upgrade data="a" cssid="supportBut" :id="'support'" extra="6"></upgrade>
+                    </div>
+                </div>
+                <div id="statsTab" class="pageTab" v-bind:style="[(player.tab=='statsTab') ? { display: 'block' } : { display: 'none' }]">
+                    <sub-nav data="s" :ids="['stats', 'lastTen', 'lastTenA', 'achievements']" :active="player.subTabs['s']"></sub-nav>
+                    <div id="statSubTab" class="statSubTab" v-bind:style="[(player.subTabs['s']=='statSubTab' && player.tab=='statsTab') ? { display: 'block' } : { display: 'none' }]">
+                        <stats-page></stats-page>
+                    </div>
+                    <div id="last10SubTab" class="statSubTab" v-bind:style="[(player.subTabs['s']=='last10SubTab' && player.tab=='statsTab') ? { display: 'block' } : { display: 'none' }]">
+                        <ten-sac></ten-sac>
+                    </div>
+                    <div id="last10AscSubTab" class="statSubTab" v-bind:style="[(player.subTabs['s']=='last10AscSubTab' && player.tab=='statsTab') ? { display: 'block' } : { display: 'none' }]">
+                        <ten-asc></ten-asc>
+                    </div>
+                    <div id="achSubTab" class="statSubTab" v-bind:style="[(player.subTabs['s']=='achSubTab' && player.tab=='statsTab') ? { display: 'block' } : { display: 'none' }]">
+                        <div id="achievementsInfo" style="text-align: center; margin-top: 20px;">
+                            Your achievements and achievement rewards are permanent. They persist through <span style="font-size: 14pt;">ALL</span> resets.<br>
+                            Achievements with a '+' have an additional reward; hover to view requirements and rewards.<br>
+                            <span id="achBoostTooltip" v-bind:class="{ tooltip: player.tooltipsEnabled }" data-title="(1.1x per achievement) * (1.2x per completed row) [both multiplicative]">You have <num-text data="sp" :val="formatWhole(getNumAchievements())" label="achievements"></num-text> and <num-text data="sp" :val="formatWhole(getNumAchRows())" label="completed rows"></num-text>, boosting all units' corpse multipliers by <span class="defNum">{{ formatDefault2(getAchievementBoost()) }}</span>x.</span>
+                        </div>
+                        <achievements></achievements>
+                    </div>
+                </div>
+                <div id="optionsTab" class="pageTab" v-bind:style="[(player.tab=='optionsTab') ? { display: 'block' } : { display: 'none' }]">
+                    <options-table></options-table>
+                    <div style="margin: auto; text-align: center;">
+                        <div style="min-height: 25px"><div v-if="importing"><label id="exportTextLabel" for="exportText">Paste your save here...</label></div></div>
+                        <div v-if="importing||exporting"><textarea class="scrollbar" style="resize: none; overflow: overlay;" ref="exptextarea" v-model="exportTextArea" id="exportText" name="exportText"></textarea></div>
+                        <div style="width: auto; margin: auto; display: flex; justify-content: center;">
+                            <div v-if="importing" style="flex: 1; width: 150px; max-width: 150px; margin: 5px;"><button class="optBut" v-on:click="importSave()">IMPORT</button></div>
+                            <div v-if="importing||exporting" style="flex: 1; width: 150px; max-width: 150px; margin: 5px;"><button class="optBut" v-on:click="closeText()">CLOSE</button></div>
+                        </div>
+                    </div>
+                    <hotkeys-display></hotkeys-display>
+                    <div style="width: 100%; text-align: center; margin: 15px auto; font-weight: bold;"><a class="whiteLink" href="https://discord.gg/H2V7FfT4Rt" target="_blank"><img src="images/discord.png" width="50px" style="margin-top:10px;"><br>DISCORD</a></div>
+                    <div style="font-size: 10pt; text-align: center; margin: 15px auto;">This game was made by monkeh42, and is very heavily influenced by hevipelle's <a href="https://ivark.github.io/" target="_blank">Antimatter Dimensions</a>, jacorb's <a href="https://jacorb90.github.io/Prestige-Tree/" target="_blank">The Prestige Tree</a>, and similar games.<br>
+                        Thanks to hevipelle and jacorb for making their games (and making their code open) and thanks to patashu for <a href="https://github.com/Patashu/break_infinity.js" target="_blank">break_infinity.js</a>.<br>
+                        Thanks toughtoffee for the awesome logo/favicon.</div>
+                    <div style="width: 100%; text-align: center;"><img src="images/NekromantiK_Logo.png" width="250px"></div>
+                </div>
+                <confirm-popup ref="confpop"></confirm-popup>
+                <favs-popup ref="fpop"></favs-popup>
+                <g-import-popup ref="gipop"></g-import-popup>
+                <g-export-popup ref="gepop"></g-export-popup>
+                <milestones-popup ref="mpop"></milestones-popup>
+                <confirmations-popup ref="cpop"></confirmations-popup>
+                <header-popup ref="hpop"></header-popup>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
