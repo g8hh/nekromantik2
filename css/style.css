@@ -35,12 +35,12 @@
 
 @font-face {
     font-family: 'Cinzel';
-    src: url(/fonts/Cinzel-Medium.otf);
+    src: url(../fonts/Cinzel-Medium.otf);
     font-variant-numeric: tabular-nums;
 }
 @font-face {
     font-family: 'Cinzel';
-    src: url(/fonts/Cinzel-ExtraBold.otf);
+    src: url(../fonts/Cinzel-ExtraBold.otf);
     font-variant-numeric: tabular-nums;
     font-weight: bold;
 }
@@ -61,7 +61,8 @@
     background-color: black;
     border: 3px solid white;
     color: white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     border-radius: 4px;
     content: attr(data-title);
     display: none;
@@ -90,7 +91,8 @@
     background-color: black;
     border: 3px solid white;
     color: white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     border-radius: 4px;
     content: attr(data-title);
     display: none;
@@ -223,7 +225,9 @@ body {
     top: 55px;
     right: 50%;
     height: 200px;
-    transform: translateX(200%);
+    -webkit-transform: translateX(200%);
+        -ms-transform: translateX(200%);
+            transform: translateX(200%);
     pointer-events: none;
     z-index: 8;
 }
@@ -232,11 +236,14 @@ body {
     position: absolute;
     left: 50%;
 	top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
     text-align: center;
     background-color: black;
     border: 3px solid white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     width: 300px;
     border-radius: 4px;
     z-index: 2;
@@ -247,11 +254,14 @@ body {
     position: fixed;
     left: 50%;
 	top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
     text-align: center;
     background-color: black;
     border: 3px solid white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     width: 400px;
     border-radius: 4px;
     z-index: 9;
@@ -261,11 +271,14 @@ body {
     position: absolute;
     left: 50%;
 	top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
     text-align: center;
     background-color: black;
     border: 3px solid white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     width: 350px;
     border-radius: 4px;
     z-index: 2;
@@ -275,11 +288,14 @@ body {
     position: fixed;
     left: 50%;
 	top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
     text-align: center;
     background-color: black;
     border: 3px solid white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     width: 320px;
     border-radius: 4px;
     z-index: 8;
@@ -290,11 +306,14 @@ body {
     position: fixed;
     left: 50%;
 	top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
     text-align: center;
     background-color: black;
     border: 3px solid white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     width: 330px;
     min-width: 330px;
     height: 235px;
@@ -307,11 +326,14 @@ body {
     position: fixed;
     left: 50%;
 	top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
     text-align: center;
     background-color: black;
     border: 3px solid white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     width: 330px;
     min-width: 330px;
     height: 235px;
@@ -324,11 +346,14 @@ body {
     position: fixed;
     left: 50%;
 	top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
     text-align: center;
     background-color: black;
     border: 3px solid white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     width: 520px;
     min-width: 520px;
     height: 250px;
@@ -356,7 +381,8 @@ body {
     text-align: center;
     background-color: black;
     border: 3px solid white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     width: 350px;
     border-radius: 4px;
     z-index: 8;
@@ -387,11 +413,14 @@ body {
     position: absolute;
     left: 50%;
 	top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
     text-align: center;
     background-color: black;
     border: 3px solid white;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     width: 300px;
     border-radius: 4px;
     padding: 10px;
@@ -401,12 +430,21 @@ body {
 
 .optRow {
     margin: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .optButCell {
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .milestonePopup {
@@ -416,7 +454,8 @@ body {
     text-align: center;
     background-color: black;
     border: 3px solid #661503;
-    box-shadow: 3px 3px #424242;
+    -webkit-box-shadow: 3px 3px #424242;
+            box-shadow: 3px 3px #424242;
     height: 600px;
     width: 400px;
     overflow: auto;
@@ -597,8 +636,14 @@ option:active, option.active {
     line-height: 35px;
     width: 85%;
     margin: 5px auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .dimensionHeader {
@@ -608,7 +653,10 @@ option:active, option.active {
 }
 
 .dimensionElement {
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .helpBut {
@@ -667,11 +715,13 @@ option:active, option.active {
 }
 
 .tabButNotify {
-    box-shadow: 0px 0px 20px 10px goldenrod;
+    -webkit-box-shadow: 0px 0px 20px 10px goldenrod;
+            box-shadow: 0px 0px 20px 10px goldenrod;
 }
 
 .tabButIndirectNotify {
-    box-shadow: 0px 0px 20px 10px silver;
+    -webkit-box-shadow: 0px 0px 20px 10px silver;
+            box-shadow: 0px 0px 20px 10px silver;
 }
 
 .tabBut:hover {
@@ -683,16 +733,28 @@ option:active, option.active {
     min-height: 50px;
     width: 1280px;
     min-width: 1280px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     margin: auto;
 }
 
 .subNavMenu {
     height: 40px;
     min-height: 40px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     margin: 7px auto;
 }
 
@@ -837,10 +899,16 @@ option:active, option.active {
 .statsHeader {
     border-bottom: 1px solid white;
     font-weight: bold;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
 }
 
 .statsRow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -849,11 +917,17 @@ option:active, option.active {
     min-width: 50%;
     border-right: 1px solid white;
     font-weight: bold;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .totalCell, .totalCellH, .bestCell, .bestCellH {
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .endBut {
@@ -1188,12 +1262,21 @@ option:active, option.active {
 
 .ethUpgRow {
     margin: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .ethUpgCell {
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .ethUpg {
@@ -1663,12 +1746,21 @@ option:active, option.active {
 
 .buildingUpgRow {
     margin: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .buildingUpgCell {
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .constrTable {
@@ -1686,12 +1778,21 @@ option:active, option.active {
 
 .constrUpgRow {
     margin: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .constrUpgCell {
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 #cUpgHeaderRow {
@@ -1763,13 +1864,22 @@ option:active, option.active {
 }
 
 .favRow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     margin: 5px;
 }
 
 .favCell {
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .timeLabelLeft {
@@ -1804,6 +1914,8 @@ option:active, option.active {
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
+    -webkit-transition: opacity .2s;
+    -o-transition: opacity .2s;
     transition: opacity .2s;
     border: 1px solid white;
 }
@@ -1838,6 +1950,8 @@ option:active, option.active {
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
+    -webkit-transition: opacity .2s;
+    -o-transition: opacity .2s;
     transition: opacity .2s;
     border: 1px solid white;
 }
@@ -1931,19 +2045,28 @@ option:active, option.active {
 }
 
 .timeUpgRow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
 }
 
 .timeUpgCell {
     border-left: 1px solid #006ba0;
     border-right: 1px solid #006ba0;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .timeUpgTDs {
     border-left: 1px solid #006ba0;
     border-right: 1px solid #006ba0;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .timeUpgTDs2 {
@@ -1971,13 +2094,22 @@ option:active, option.active {
 }
 
 .autobuyerRow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .autobuyerCell {
     margin: 2px;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .autobuyerOptions {
@@ -1993,13 +2125,22 @@ option:active, option.active {
 }
 
 .dimBuyerButtonRow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .dimBuyerButtonCell {
     margin: 0px 7.5px 0px;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .buyerPriBut {
@@ -2475,6 +2616,9 @@ option:active, option.active {
 }
 
 .achRow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -2485,7 +2629,10 @@ option:active, option.active {
     text-align: center;
     padding: 5px;
     margin: 8px;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .achievement.locked {
@@ -2508,15 +2655,18 @@ option:active, option.active {
 }
 
 .achievement.new {
-    box-shadow: 0px 0px 10px 5px goldenrod;
+    -webkit-box-shadow: 0px 0px 10px 5px goldenrod;
+            box-shadow: 0px 0px 10px 5px goldenrod;
 }
 
 .timeUnlockedNotify {
-    box-shadow: 0px 0px 5px 5px #006ba0;
+    -webkit-box-shadow: 0px 0px 5px 5px #006ba0;
+            box-shadow: 0px 0px 5px 5px #006ba0;
 }
 
 .timeUnlockedButtonNotify {
-    box-shadow: 0px 0px 5px 10px #006ba0;
+    -webkit-box-shadow: 0px 0px 5px 10px #006ba0;
+            box-shadow: 0px 0px 5px 10px #006ba0;
 }
 
 .achievement p, .achievementUnlocked p {
@@ -2524,7 +2674,8 @@ option:active, option.active {
 }
 
 .achUnlockPopup {
-    box-shadow: 0px 0px 10px 5px goldenrod;
+    -webkit-box-shadow: 0px 0px 10px 5px goldenrod;
+            box-shadow: 0px 0px 10px 5px goldenrod;
     text-align: center;
     background-color: black;
     border: 3px solid white;
@@ -2535,7 +2686,8 @@ option:active, option.active {
 }
 
 .milesUnlockPopup {
-    box-shadow: 0px 0px 10px 5px #e32d05;
+    -webkit-box-shadow: 0px 0px 10px 5px #e32d05;
+            box-shadow: 0px 0px 10px 5px #e32d05;
     text-align: center;
     background-color: black;
     border: 3px solid white;
@@ -2546,7 +2698,8 @@ option:active, option.active {
 }
 
 .savePopup {
-    box-shadow: 0px 0px 5px 2px white;
+    -webkit-box-shadow: 0px 0px 5px 2px white;
+            box-shadow: 0px 0px 5px 2px white;
     text-align: center;
     background-color: black;
     border: 3px solid white;
@@ -2557,7 +2710,8 @@ option:active, option.active {
 }
 
 .autosavePopup {
-    box-shadow: 0px 0px 5px 2px white;
+    -webkit-box-shadow: 0px 0px 5px 2px white;
+            box-shadow: 0px 0px 5px 2px white;
     text-align: center;
     background-color: black;
     border: 3px solid white;
@@ -2569,11 +2723,13 @@ option:active, option.active {
 }
 
 .milestonesNotify {
-    box-shadow: 0px 0px 10px 5px #e32d05;
+    -webkit-box-shadow: 0px 0px 10px 5px #e32d05;
+            box-shadow: 0px 0px 10px 5px #e32d05;
 }
 
 .projectNotify {
-    box-shadow: 0px 0px 20px 10px #e32d05;
+    -webkit-box-shadow: 0px 0px 20px 10px #e32d05;
+            box-shadow: 0px 0px 20px 10px #e32d05;
 }
 
 #astralButResearch {
@@ -2671,8 +2827,12 @@ option:active, option.active {
     position: absolute;
     left: 0px;
 	top: 50%;
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
     z-index: 2;
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
     opacity: 0;
 }
@@ -2689,8 +2849,12 @@ option:active, option.active {
     position: absolute;
     left: 0px;
 	top: 50%;
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
     z-index: 2;
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
     opacity: 0;
 }
@@ -2751,30 +2915,54 @@ option:active, option.active {
     height: 1024px;
     position: relative;
     left: -154px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .galaxiesTable4 {
     width: 1588px;
     height: 1024px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .galaxiesTableCont {
     width: 1280px;
     height: 1024px;
     margin: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .galaxiesTable {
     width: 1280px;
     min-width: 1280px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .galaxyTable {
@@ -2783,19 +2971,31 @@ option:active, option.active {
     width: 385px;
     border: 1px solid #661503;
     background-color: transparent;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .galaxyCell {
     max-width: 397px;
     width: 397px;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .galaxyUpgRow {
     margin: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 /*.leftGalaxyTD {
@@ -2813,13 +3013,19 @@ option:active, option.active {
 
 .leftGalaxyCell {
     margin: auto;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .rightGalaxyCell {
     margin: auto;
     border-left: 3px solid #661503;
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .topGalaxyCell {
@@ -2827,7 +3033,10 @@ option:active, option.active {
     height: 195px;
     margin: auto;
     border-bottom: 3px solid #661503;
-    flex: 0;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0;
+        -ms-flex: 0;
+            flex: 0;
 }
 
 .bottomGalaxyCell {
@@ -2835,7 +3044,10 @@ option:active, option.active {
     height: 195px;
     margin: auto;
     border-top: 3px solid #661503;
-    flex: 0;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0;
+        -ms-flex: 0;
+            flex: 0;
 }
 
 /*.rightGalaxyTD {
@@ -2982,7 +3194,8 @@ option:active, option.active {
     top: 320px;
     left: 146px;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .progressResearchButton {
@@ -3001,7 +3214,8 @@ option:active, option.active {
     top: 320px;
     left: 146px;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .researchButton:hover {
@@ -3025,7 +3239,8 @@ option:active, option.active {
     top: 320px;
     left: 146px;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .resConds {
@@ -3076,7 +3291,8 @@ option:active, option.active {
     top: 190px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .progressInfResearchButton {
@@ -3095,7 +3311,8 @@ option:active, option.active {
     top: 190px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 #astralButInfResearch:hover, .infResearchButton:hover {
@@ -3121,7 +3338,8 @@ option:active, option.active {
     top: 190px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .unclickInfResearchBut {
@@ -3139,7 +3357,8 @@ option:active, option.active {
     top: 190px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .unclickResearchBut {
@@ -3157,7 +3376,8 @@ option:active, option.active {
     top: 320px;
     left: 146px;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .researchTable {
@@ -3167,12 +3387,21 @@ option:active, option.active {
 }
 
 .researchRow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .researchCell {
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 .resGoalText {
@@ -3184,7 +3413,8 @@ option:active, option.active {
     top: 280px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .infResGoal {
@@ -3203,7 +3433,8 @@ option:active, option.active {
     top: 150px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .arkImg {
@@ -3211,7 +3442,8 @@ option:active, option.active {
     top: 300px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 .arkImgBuilt {
@@ -3219,7 +3451,8 @@ option:active, option.active {
     top: 300px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 #arkSubTab {
@@ -3232,7 +3465,8 @@ option:active, option.active {
     top: 0;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 #arkDescription {
@@ -3240,7 +3474,8 @@ option:active, option.active {
     top: 0;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
 }
 
 #thrustersBut {
@@ -3248,7 +3483,10 @@ option:active, option.active {
     bottom: 260px;
     left: 50%;
     -webkit-transform: translateX(200%);
-    transform: translateX(200%);
+    -ms-transform: translateX(200%);
+        transform: translateX(200%);
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
 }
 
@@ -3257,7 +3495,10 @@ option:active, option.active {
     bottom: 150px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
 }
 
@@ -3266,7 +3507,10 @@ option:active, option.active {
     top: 175px;
     left: 50%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
 }
 
@@ -3275,7 +3519,10 @@ option:active, option.active {
     top: 450px;
     left: 50%;
     -webkit-transform: translateX(-175%);
-    transform: translateX(-175%);
+    -ms-transform: translateX(-175%);
+        transform: translateX(-175%);
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
 }
 
@@ -3284,7 +3531,10 @@ option:active, option.active {
     top: 450px;
     left: 50%;
     -webkit-transform: translateX(75%);
-    transform: translateX(75%);
+    -ms-transform: translateX(75%);
+        transform: translateX(75%);
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
 }
 
@@ -3293,7 +3543,10 @@ option:active, option.active {
     bottom: 260px;
     left: 50%;
     -webkit-transform: translateX(-300%);
-    transform: translateX(-300%);
+    -ms-transform: translateX(-300%);
+        transform: translateX(-300%);
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
 }
 
@@ -3453,11 +3706,17 @@ option:active, option.active {
 .toggleRow {
     width: 100%;
     height: 52px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
 }
 
 .toggleText {
-    flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
     line-height: 52px;
 }
 
@@ -3557,6 +3816,8 @@ option:active, option.active {
     left: 0px;
     background-color: black;
     z-index: 8;
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
     display: none;
 }
@@ -3565,9 +3826,13 @@ option:active, option.active {
     position: absolute;
     top: 40%;
     left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
     text-align: center;
     opacity: 0;
+    -webkit-transition: opacity 2s;
+    -o-transition: opacity 2s;
     transition: opacity 2s;
     font-size: 16pt;
     color: #661503;
@@ -3577,6 +3842,8 @@ option:active, option.active {
 }
 
 .fade-enter-active, .fade-leave-active {
+    -webkit-transition: opacity .5s;
+    -o-transition: opacity .5s;
     transition: opacity .5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {

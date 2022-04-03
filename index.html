@@ -3,7 +3,8 @@
 <html id="docElement" style="min-height: 1080px;" >
 
 <head>
-    <title>NekromantiK</title>
+   <meta charset="utf-8" />
+    <title>死灵术2 - NekromantiK</title>
     <script type="text/javascript" src="js/tools/break_infinity.js"></script>
     <script type="text/javascript" src="game.js"></script>
     <script type="text/javascript" src="js/units.js"></script>
@@ -18,10 +19,11 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
+<!--
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-79WY981WCL"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -30,9 +32,12 @@
 
         gtag('config', 'G-79WY981WCL');
     </script>
+-->
 </head>
 
 <body id="htmlBody" class="scrollbar" onload="init()">
+<script src="chs.js?202106041511"></script>
+<script src="//g8hh.com/zh/core.js"></script>
     <div id="app">
         <div id="shadowDiv" v-bind:style="{ 'box-shadow': shadowStyle }">
             <div id="winScreen">
@@ -465,19 +470,19 @@
                             Even in your godlike state this is beyond you. This will require study.<br>
                             Of course, you have undead souls to do your studying for you.<br>
                         </div>
-                        <img v-if="player.ark['thrusters'].unlocked&&!player.ark['thrusters'].bought" id="thrusters" class="arkImg" style="display: block;" src="../images/thrusters.png">
-                        <img v-if="player.ark['engines'].unlocked&&!player.ark['engines'].bought" id="engines" class="arkImg" style="display: block;" src="../images/engines.png">
-                        <img v-if="player.ark['navigation'].unlocked&&!player.ark['navigation'].bought" id="navigation" class="arkImg" style="display: block;" src="../images/navigation.png">
-                        <img v-if="player.ark['torpedos'].unlocked&&!player.ark['torpedos'].bought" id="torpedos" class="arkImg" style="display: block;" src="../images/torpedos.png">
-                        <img v-if="player.ark['railguns'].unlocked&&!player.ark['railguns'].bought" id="railguns" class="arkImg" style="display: block;" src="../images/railguns.png">
-                        <img v-if="player.ark['support'].unlocked&&!player.ark['support'].bought" id="support" class="arkImg" style="display: block;" src="../images/support.png">
-                        <img v-if="player.ark['thrusters'].bought&&!player.win" id="thrustersBuilt" class="arkImgBuilt" style="display: block;" src="../images/thrusterscolor.png">
-                        <img v-if="player.ark['engines'].bought&&!player.win" id="enginesBuilt" class="arkImgBuilt" style="display: block;" src="../images/enginescolor.png">
-                        <img v-if="player.ark['navigation'].bought&&!player.win" id="navigationBuilt" class="arkImgBuilt" style="display: block;" src="../images/navigationcolor.png">
-                        <img v-if="player.ark['torpedos'].bought&&!player.win" id="torpedosBuilt" class="arkImgBuilt" style="display: block;" src="../images/torpedoscolor.png">
-                        <img v-if="player.ark['railguns'].bought&&!player.win" id="railgunsBuilt" class="arkImgBuilt" style="display: block;" src="../images/railgunscolor.png">
-                        <img v-if="player.ark['support'].bought&&!player.win" id="supportBuilt" class="arkImgBuilt" style="display: block;" src="../images/supportcolor.png">
-                        <img v-if="player.win&&!player.continue" id="fullyBuilt" class="arkImgBuilt" style="display: block;" src="../images/spaceshipcolor.png">
+                        <img v-if="player.ark['thrusters'].unlocked&&!player.ark['thrusters'].bought" id="thrusters" class="arkImg" style="display: block;" src="images/thrusters.png">
+                        <img v-if="player.ark['engines'].unlocked&&!player.ark['engines'].bought" id="engines" class="arkImg" style="display: block;" src="images/engines.png">
+                        <img v-if="player.ark['navigation'].unlocked&&!player.ark['navigation'].bought" id="navigation" class="arkImg" style="display: block;" src="images/navigation.png">
+                        <img v-if="player.ark['torpedos'].unlocked&&!player.ark['torpedos'].bought" id="torpedos" class="arkImg" style="display: block;" src="images/torpedos.png">
+                        <img v-if="player.ark['railguns'].unlocked&&!player.ark['railguns'].bought" id="railguns" class="arkImg" style="display: block;" src="images/railguns.png">
+                        <img v-if="player.ark['support'].unlocked&&!player.ark['support'].bought" id="support" class="arkImg" style="display: block;" src="images/support.png">
+                        <img v-if="player.ark['thrusters'].bought&&!player.win" id="thrustersBuilt" class="arkImgBuilt" style="display: block;" src="images/thrusterscolor.png">
+                        <img v-if="player.ark['engines'].bought&&!player.win" id="enginesBuilt" class="arkImgBuilt" style="display: block;" src="images/enginescolor.png">
+                        <img v-if="player.ark['navigation'].bought&&!player.win" id="navigationBuilt" class="arkImgBuilt" style="display: block;" src="images/navigationcolor.png">
+                        <img v-if="player.ark['torpedos'].bought&&!player.win" id="torpedosBuilt" class="arkImgBuilt" style="display: block;" src="images/torpedoscolor.png">
+                        <img v-if="player.ark['railguns'].bought&&!player.win" id="railgunsBuilt" class="arkImgBuilt" style="display: block;" src="images/railgunscolor.png">
+                        <img v-if="player.ark['support'].bought&&!player.win" id="supportBuilt" class="arkImgBuilt" style="display: block;" src="images/supportcolor.png">
+                        <img v-if="player.win&&!player.continue" id="fullyBuilt" class="arkImgBuilt" style="display: block;" src="images/spaceshipcolor.png">
                         <upgrade data="a" cssid="thrustersBut" :id="'thrusters'" extra="1"></upgrade>
                         <upgrade data="a" cssid="enginesBut" :id="'engines'" extra="2"></upgrade>
                         <upgrade data="a" cssid="navigationBut" :id="'navigation'" extra="3"></upgrade>
@@ -538,3 +543,12 @@
 </body>
 
 </html>
+<!--客服 开始-->
+<script src="//g8hh.com/static/js/jquery.min.js"></script>
+<link rel="stylesheet" href="//g8hh.com/static/css/kf.css" type="text/css" media="screen" charset="utf-8">
+<script src="//g8hh.com/static/js/kf.js"></script>
+<!-- 客服 结束 -->
+<!--站长统计-->
+    <div style="display: none">
+        <script type="text/javascript" src="//s13.cnzz.com/z_stat.php?id=1266957935&web_id=1266957935"></script>
+    </div>
