@@ -48,7 +48,7 @@ var cnItems = {
     "AUTOBUYERS": "汽车买家",
     "Buildings": "建筑物",
     "BUILDINGS": "建筑",
-    "CONSTRUCTION": "建造",
+    "CONSTRUCTION": "构造",
     "Construction upgrades": "建筑升级",
     "Corpses": "尸体",
     "Cosmogenesis": "宇宙发生",
