@@ -456,7 +456,7 @@ var cnItems = {
     "This world prestige will unlock Construction and a new unit tier.": "这个世界声望将解锁建筑和新的单位等级。",
     "Requires 1 behemoth": "需要1个巨兽",
     "world": "世界",
-    "": "",
+    "Requires 1 ancient one": "需要 1 个古人",
     "": "",
     "": "",
     "": "",
