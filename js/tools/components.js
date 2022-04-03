@@ -870,8 +870,8 @@ function loadVue() {
 				let str = '';
 				if (DATA.ach[id].secret && !player.achievements[id]) { str += DATA.ach[id].hint; }
 				else { str += DATA.ach[id].desc; }
-				if (DATA.ach[id].hasReward) { str += (' Reward: ' + DATA.ach[id].reward); }
-				if (DATA.ach[id].showEffect) { str += (' Currently: ' + formatDefault2(DATA.ach[id].effect()) + 'x'); }
+				if (DATA.ach[id].hasReward) { str += (' 奖励: ' + DATA.ach[id].reward); }
+				if (DATA.ach[id].showEffect) { str += (' 当前: ' + formatDefault2(DATA.ach[id].effect()) + 'x'); }
 				return str;
 			},
 			isNew() {
