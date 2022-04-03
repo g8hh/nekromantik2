@@ -1661,13 +1661,13 @@ var OPTIONS_DATA = {
         title: 'CHANGELOG',
         altTitle: '',
         altToggle: function() { return false; },
-        fxn: function() { window.open('/docs/changelog.html', '_blank'); },
+        fxn: function() { window.open('docs/changelog.html', '_blank'); },
     },
     14: {
         title: 'HELP (full text)',
         altTitle: '',
         altToggle: function() { return false; },
-        fxn: function() { window.open('/docs/nekro_help.html', '_blank'); },
+        fxn: function() { window.open('docs/nekro_help.html', '_blank'); },
     },
     21: {
         title: 'EXPORT SAVE',
