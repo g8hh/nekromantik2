@@ -2100,7 +2100,7 @@ var ACH_DATA = {
         desc: '解锁枯竭的星系.',
         secret: false,
         hint: '',
-        reward: 'Menagerie Of Worlds\'s effect is stronger (^0.67 -> ^0.333).',
+        reward: '世界动物园的效果更强 (^0.67 -> ^0.333).',
         showEffect: false,
         hasReward: true,
         divID: 'ach35',
@@ -2117,7 +2117,7 @@ var ACH_DATA = {
     41: {
         title: 'Interstellar',
         desc: '购买一个星系升级.',
-        reward: 'You start all resets with 25,000 corpses.',
+        reward: '你以 25,000 具尸体开始所有重置.',
         secret: false,
         hint: '',
         hasReward: true,
@@ -2138,7 +2138,7 @@ var ACH_DATA = {
         desc: '第二次购买世界停滞3.',
         secret: false,
         hint: '',
-        reward: 'Autobuyers are unlocked permanently.',
+        reward: '自动购买者永久解锁.',
         hasReward: true,
         showEffect: false,
         divID: 'ach42',
@@ -2157,7 +2157,7 @@ var ACH_DATA = {
         desc: '第二次购买 死灵时间.',
         secret: false,
         hint: '',
-        reward: 'Nekro-Time is never reset.',
+        reward: '死灵时间 永不重置.',
         hasReward: true,
         showEffect: false,
         divID: 'ach43',
@@ -2192,7 +2192,7 @@ var ACH_DATA = {
     },
     45: {
         title: 'Why?',
-        desc: 'Sacrifice without enabling astral enslavement this ascension.',
+        desc: '在不使星体奴役的情况下进行牺牲.',
         secret: false,
         hint: '',
         reward: '',
@@ -2211,7 +2211,7 @@ var ACH_DATA = {
     },
     51: {
         title: 'Multi-Galactic',
-        desc: 'Ascend for more than one galaxy.',
+        desc: '转生超过一个星系.',
         secret: false,
         hint: '',
         reward: '死神光子只有在死日被重置时才会被重置.',
@@ -2230,9 +2230,9 @@ var ACH_DATA = {
     },
     52: {
         title: 'We\'ve All Been There',
-        desc: 'Respec galaxies without any galaxy upgrades.',
+        desc: '在没有任何星系升级的情况下重洗星系.',
         secret: true,
-        hint: 'Hint: do something utterly pointless.',
+        hint: '提示：做一些完全没有意义的事情.',
         reward: '',
         hasReward: false,
         showEffect: false,
@@ -2873,35 +2873,35 @@ var UNLOCKS_DATA = {
 var HOTKEYS = {
     '1': {
         key: 'm',
-        desc: 'Max All Units',
+        desc: '最大全部单位',
         onPress: function() {
             buyMaxAll();
         }
     },
     '2': {
         key: 'a',
-        desc: 'Toggle Astral Enslavement',
+        desc: '切换星体奴役',
         onPress: function() {
             toggleAstral();
         }
     },
     '3': {
         key: 'p',
-        desc: 'World Prestige',
+        desc: '世界声望',
         onPress: function() {
             spacePrestigeKey();
         }
     },
     '4': {
         key: 's',
-        desc: 'Sacrifice',
+        desc: '牺牲',
         onPress: function() {
             timePrestigeKey();
         }
     },
     '5': {
         key: 't',
-        desc: 'Respec Time Production',
+        desc: '重洗时间生产',
         onPress: function() {
             respecTimeKey();
         }
